@@ -23,12 +23,12 @@ class HomePage(TemplateView):
 	def get(self, request):
 		return render(request, 'fake/home.html',)
 
-
+'''
 class DataPage(TemplateView):
 	def get(self, request):
 		alluser= Client.objects.all()
 		return render(request, 'fake/user.html', {'alluser':alluser})
-
+'''
 
 @csrf_exempt
 def NewUser(request):
@@ -36,8 +36,9 @@ def NewUser(request):
 		ids=request.POST['ids']
 		password=request.POST['password']
 		c=Client(ids=ids, password=password)
-		s.save()
-		return JsonResponse(response,{})
+		c.save()
+		response={'done':"Done"}
+		return JsonResponse(response,)
 		
 
 class Login(TemplateView):
