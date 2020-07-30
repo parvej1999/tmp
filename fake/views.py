@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Client
@@ -9,10 +9,20 @@ from django.views.decorators.csrf import csrf_exempt
 import os
 
 
+class SignUp(TemplateView):
+	def get(self, request):
+		return HttpResponseForbidden()
+
+
+class ForgetPassword(TemplateView):
+	def get(self, request):
+		return HttpResponseForbidden()
+
 
 class HomePage(TemplateView):
 	def get(self, request):
 		return render(request, 'fake/home.html',)
+
 
 class DataPage(TemplateView):
 	def get(self, request):
