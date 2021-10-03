@@ -8,7 +8,23 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 import os
 
-
+//----------hacktober fest---------------
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        user_form = User_form(request.POST, instance=request.user)
+        user_profile = UserProfile(
+            request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and user_profile.is_valid():
+            user_form.save()
+            user_profile.save()
+            messages.success(request, 'Profile Have Been Updated Successfully')
+            return redirect('profile')
+    else:
+        user_form = User_form(instance=request.user)
+        user_profile = UserProfile(instance=request.user.profile)
+    return render(request, 'Users/profile.html', {"user_form": user_form, 'profile_form': user_profile})
+=-------------------------------------==
 
 class HomePage(TemplateView):
 	def get(self, request):
