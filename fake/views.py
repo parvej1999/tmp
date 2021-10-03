@@ -24,6 +24,18 @@ def profile(request):
         user_form = User_form(instance=request.user)
         user_profile = UserProfile(instance=request.user.profile)
     return render(request, 'Users/profile.html', {"user_form": user_form, 'profile_form': user_profile})
+
+def register(request):
+    if request.method == 'POST':
+        form = registrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Your username is "{username}"')
+            return redirect('login')
+    else:
+        form = registrationForm()
+    return render(request, 'Users/registerForm.html', {"form": form})
 =-------------------------------------==
 
 class HomePage(TemplateView):
